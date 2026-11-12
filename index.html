@@ -65,6 +65,9 @@
     }
 
     .interests { margin: 0; color: var(--muted); font-size: clamp(1rem, 2.5vw, 1.23rem); }
+    .interests.is-typing { display: grid; }
+    .interests.is-typing > span { grid-area: 1 / 1; }
+    .interests.is-typing > span:first-child { opacity: 0; }
     .section {
       display: grid;
       grid-template-columns: minmax(8rem, 1fr) minmax(0, 4fr);
@@ -170,5 +173,34 @@
       </section>
     </div>
   </main>
+  <script>
+    const intro = document.querySelector(".interests");
+
+    if (intro && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const fullText = intro.textContent;
+      const letters = Array.from(fullText);
+      const accessibleText = document.createElement("span");
+      const typedText = document.createElement("span");
+      accessibleText.textContent = fullText;
+      typedText.setAttribute("aria-hidden", "true");
+      intro.replaceChildren(accessibleText, typedText);
+      intro.classList.add("is-typing");
+
+      let position = 0;
+      function typeNextLetter() {
+        typedText.textContent += letters[position];
+        position += 1;
+
+        if (position < letters.length) {
+          window.setTimeout(typeNextLetter, 28);
+        } else {
+          intro.textContent = fullText;
+          intro.classList.remove("is-typing");
+        }
+      }
+
+      window.setTimeout(typeNextLetter, 120);
+    }
+  </script>
 </body>
 </html>
