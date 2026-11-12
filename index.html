@@ -80,6 +80,20 @@
 
     h2 { margin: 0; color: var(--purple); font-size: 2rem; line-height: 1.12; }
     .about { max-width: 68ch; margin: 0; }
+    .project-filters:not([hidden]) { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+    .project-filters button {
+      border: 1px solid var(--purple);
+      border-radius: 999px;
+      padding: .45rem .9rem;
+      background: #fff;
+      color: var(--purple);
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .project-filters button:hover { background: var(--wash); }
+    .project-filters button[aria-pressed="true"] { background: var(--purple); color: #fff; }
+    .project-filters button:focus-visible { outline: 2px solid var(--purple); outline-offset: 3px; }
     .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
     .card { padding: 1.15rem; border: 1px solid var(--line); border-top: 3px solid var(--purple); }
     .card h3 { margin: 0 0 .7rem; font-size: 1rem; line-height: 1.35; }
@@ -134,22 +148,28 @@
 
       <section class="section" id="projects" aria-labelledby="projects-heading">
         <h2 id="projects-heading">Projects</h2>
-        <div class="cards">
-          <article class="card">
-            <h3>IoT-Based Patient Monitoring System</h3>
-            <p>Built an ESP32 prototype to monitor ECG, heart rate, SpO₂, and temperature.</p>
-            <p>Ran functional tests and assessed signal quality in MATLAB.</p>
-          </article>
-          <article class="card">
-            <h3>Smart Wound Bandage</h3>
-            <p>Modeled sensing concepts for temperature, pH, lactate, and moisture.</p>
-            <p>Compared physiological ranges and documented the design rationale.</p>
-          </article>
-          <article class="card">
-            <h3>Wearable Biomedical Sensing Research</h3>
-            <p>Assess PPG-based sensors for physiological and peripheral perfusion monitoring.</p>
-            <p>Review hardware feasibility, signal quality, and potential ECG and bioimpedance integration.</p>
-          </article>
+        <div>
+          <div class="project-filters" role="group" aria-label="Filter projects" hidden>
+            <button type="button" aria-pressed="true" data-filter="all">All</button>
+            <button type="button" aria-pressed="false" data-filter="wound-bandage">Smart Wound Bandage</button>
+          </div>
+          <div class="cards">
+            <article class="card">
+              <h3>IoT-Based Patient Monitoring System</h3>
+              <p>Built an ESP32 prototype to monitor ECG, heart rate, SpO₂, and temperature.</p>
+              <p>Ran functional tests and assessed signal quality in MATLAB.</p>
+            </article>
+            <article class="card" data-project="wound-bandage">
+              <h3>Smart Wound Bandage</h3>
+              <p>Modeled sensing concepts for temperature, pH, lactate, and moisture.</p>
+              <p>Compared physiological ranges and documented the design rationale.</p>
+            </article>
+            <article class="card">
+              <h3>Wearable Biomedical Sensing Research</h3>
+              <p>Assess PPG-based sensors for physiological and peripheral perfusion monitoring.</p>
+              <p>Review hardware feasibility, signal quality, and potential ECG and bioimpedance integration.</p>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -201,6 +221,24 @@
 
       window.setTimeout(typeNextLetter, 120);
     }
+  </script>
+  <script>
+    const projectFilters = document.querySelector(".project-filters");
+    const filterButtons = projectFilters.querySelectorAll("button");
+    const projectCards = document.querySelectorAll("#projects .card");
+
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+        filterButtons.forEach(option => {
+          option.setAttribute("aria-pressed", String(option === button));
+        });
+        projectCards.forEach(card => {
+          card.hidden = filter !== "all" && card.dataset.project !== filter;
+        });
+      });
+    });
+    projectFilters.hidden = false;
   </script>
 </body>
 </html>
