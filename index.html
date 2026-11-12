@@ -45,7 +45,30 @@
     nav { font-size: .9rem; font-weight: 600; }
 
     .hero { background: var(--wash); border-bottom: 1px solid var(--line); }
-    .hero .wrap { padding-block: clamp(3rem, 8vw, 6.3rem); }
+    .hero .wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: clamp(1.5rem, 4vw, 3rem);
+      padding-block: clamp(3rem, 8vw, 6.3rem);
+    }
+    .portrait {
+      position: relative;
+      width: clamp(10rem, 20vw, 14rem);
+      aspect-ratio: 1;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: var(--wash);
+    }
+    .portrait img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 175%;
+      height: auto;
+      transform: translate(-50%, -52%);
+    }
     .program {
       margin: 0;
       color: var(--purple);
@@ -111,6 +134,10 @@
       .section { grid-template-columns: 1fr; }
     }
 
+    @media (max-width: 48rem) {
+      .hero .wrap { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 39rem) {
       .wrap { width: calc(100% - 2rem); }
       .cards, .skills { grid-template-columns: 1fr; }
@@ -134,9 +161,14 @@
   <main>
     <div class="hero">
       <div class="wrap">
-        <p class="program">M.S. Biomedical Engineering · NYU Tandon</p>
-        <h1>Diya Panchamia</h1>
-        <p class="interests">Interested in clinical engineering, patient monitoring, and reliable patient care.</p>
+        <div>
+          <p class="program">M.S. Biomedical Engineering · NYU Tandon</p>
+          <h1>Diya Panchamia</h1>
+          <p class="interests">Interested in clinical engineering, patient monitoring, and reliable patient care.</p>
+        </div>
+        <div class="portrait">
+          <img src="diya-portrait.jpg" alt="Diya Panchamia" width="1200" height="1600">
+        </div>
       </div>
     </div>
 
