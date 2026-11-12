@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Diya Panchamia, M.S. Biomedical Engineering student at NYU Tandon School of Engineering.">
+  <title>Diya Panchamia | Biomedical Engineering</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --purple: #57068c;
+      --ink: #211a27;
+      --muted: #51485a;
+      --line: #e6ddeb;
+      --wash: #f8f2fb;
+      --width: 68rem;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #fff;
+      color: var(--ink);
+      font: 1rem/1.6 "Segoe UI", system-ui, sans-serif;
+    }
+
+    .wrap { width: min(var(--width), calc(100% - 4rem)); margin-inline: auto; }
+    a { color: var(--purple); text-underline-offset: .22em; }
+    a:hover { text-decoration-thickness: .13em; }
+    a:focus-visible { outline: 2px solid var(--purple); outline-offset: 5px; }
+
+    .masthead { border-top: 4px solid var(--purple); border-bottom: 1px solid var(--line); }
+    .masthead .wrap, nav, .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: .55rem 1.5rem;
+    }
+
+    .masthead .wrap { justify-content: space-between; padding-block: .9rem; }
+    .monogram { font-size: .9rem; font-weight: 800; letter-spacing: .12em; }
+    .masthead a { text-decoration: none; }
+    .masthead a:hover { text-decoration: underline; }
+    nav { font-size: .9rem; font-weight: 600; }
+
+    .hero { background: var(--wash); border-bottom: 1px solid var(--line); }
+    .hero .wrap { padding-block: clamp(3rem, 8vw, 6.3rem); }
+    .program {
+      margin: 0;
+      color: var(--purple);
+      font-size: .83rem;
+      font-weight: 750;
+      letter-spacing: .085em;
+      text-transform: uppercase;
+    }
+
+    h1, h2 { font-family: Georgia, serif; font-weight: 400; }
+    h1 {
+      margin: .45rem 0 .65rem;
+      color: var(--purple);
+      font-size: clamp(3rem, 8.4vw, 6.1rem);
+      line-height: 1.02;
+      letter-spacing: -.055em;
+    }
+
+    .interests { margin: 0; color: var(--muted); font-size: clamp(1rem, 2.5vw, 1.23rem); }
+    .section {
+      display: grid;
+      grid-template-columns: minmax(8rem, 1fr) minmax(0, 4fr);
+      align-items: start;
+      gap: 1.25rem 2rem;
+      padding-block: clamp(1.9rem, 4vw, 3rem);
+      border-bottom: 1px solid var(--line);
+      scroll-margin-top: 1rem;
+    }
+
+    h2 { margin: 0; color: var(--purple); font-size: 2rem; line-height: 1.12; }
+    .about { max-width: 68ch; margin: 0; }
+    .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+    .card { padding: 1.15rem; border: 1px solid var(--line); border-top: 3px solid var(--purple); }
+    .card h3 { margin: 0 0 .7rem; font-size: 1rem; line-height: 1.35; }
+    .card p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .card p + p { margin-top: .55rem; }
+
+    .skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem 1.5rem; margin: 0; padding-left: 1.15rem; }
+    .skills li::marker { color: var(--purple); }
+    .skills strong { display: block; }
+    .skills span { color: var(--muted); }
+    .contact { border-bottom: 0; }
+    .contact-links { margin: 0; padding: 0; list-style: none; overflow-wrap: anywhere; }
+
+    @media (max-width: 54rem) {
+      .section { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 39rem) {
+      .wrap { width: calc(100% - 2rem); }
+      .cards, .skills { grid-template-columns: 1fr; }
+      nav { gap: .3rem .85rem; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="masthead">
+    <div class="wrap">
+      <a class="monogram" href="#top" aria-label="Diya Panchamia, top of page">DP</a>
+      <nav aria-label="Page sections">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="wrap">
+        <p class="program">M.S. Biomedical Engineering · NYU Tandon</p>
+        <h1>Diya Panchamia</h1>
+        <p class="interests">Interested in clinical engineering, patient monitoring, and reliable patient care.</p>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <section class="section" id="about" aria-labelledby="about-heading">
+        <h2 id="about-heading">About</h2>
+        <p class="about">I’m an M.S. Biomedical Engineering student at NYU Tandon School of Engineering, expecting to graduate in May 2027. My hands-on experience includes medical device prototyping, integrating ECG, SpO₂, and temperature sensors, and troubleshooting sensor-based hardware. As a guided studies student researcher in NYU Tandon’s Computational Biophotonics Lab, I evaluate wearable sensing technologies for monitoring physiological signals and peripheral perfusion in critically ill patients.</p>
+      </section>
+
+      <section class="section" id="projects" aria-labelledby="projects-heading">
+        <h2 id="projects-heading">Projects</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>IoT-Based Patient Monitoring System</h3>
+            <p>Built an ESP32 prototype to monitor ECG, heart rate, SpO₂, and temperature.</p>
+            <p>Ran functional tests and assessed signal quality in MATLAB.</p>
+          </article>
+          <article class="card">
+            <h3>Smart Wound Bandage</h3>
+            <p>Modeled sensing concepts for temperature, pH, lactate, and moisture.</p>
+            <p>Compared physiological ranges and documented the design rationale.</p>
+          </article>
+          <article class="card">
+            <h3>Wearable Biomedical Sensing Research</h3>
+            <p>Assess PPG-based sensors for physiological and peripheral perfusion monitoring.</p>
+            <p>Review hardware feasibility, signal quality, and potential ECG and bioimpedance integration.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="skills" aria-labelledby="skills-heading">
+        <h2 id="skills-heading">Skills</h2>
+        <ul class="skills">
+          <li><strong>Biomedical instrumentation</strong><span>ECG, pulse oximetry, temperature monitoring</span></li>
+          <li><strong>Hardware and electronics</strong><span>Sensor integration, ESP32, electronic circuits, signal conditioning</span></li>
+          <li><strong>Testing and troubleshooting</strong><span>Prototype testing, functional verification, sensor-output evaluation</span></li>
+          <li><strong>Technical documentation</strong><span>Test protocols, technical reports, device specifications</span></li>
+          <li><strong>Software</strong><span>MATLAB, Python, COMSOL, SolidWorks, AutoCAD</span></li>
+        </ul>
+      </section>
+
+      <section class="section contact" id="contact" aria-labelledby="contact-heading">
+        <h2 id="contact-heading">Contact</h2>
+        <ul class="contact-links">
+          <li><a href="mailto:dp4191@nyu.edu">dp4191@nyu.edu</a></li>
+          <li><a href="https://www.linkedin.com/in/diya-panchamia-488401222/">LinkedIn</a></li>
+        </ul>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
