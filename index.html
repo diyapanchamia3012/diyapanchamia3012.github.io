@@ -127,6 +127,31 @@
     .skills li::marker { color: var(--purple); }
     .skills strong { display: block; }
     .skills span { color: var(--muted); }
+    .gallery-photos { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .gallery-photos a {
+      display: block;
+      width: min(100%, 10rem);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: .5rem;
+    }
+    .gallery-photos img { display: block; width: 100%; height: auto; }
+    .gallery-viewer { max-width: 92vw; max-height: 90dvh; padding: 0; border: 0; background: #211a27; }
+    .gallery-viewer::backdrop { background: rgb(33 26 39 / 85%); }
+    .gallery-viewer img { display: block; max-width: 100%; max-height: 88dvh; width: auto; height: auto; }
+    .gallery-viewer button {
+      position: absolute;
+      top: .5rem;
+      right: .5rem;
+      padding: .35rem .65rem;
+      border: 1px solid var(--purple);
+      border-radius: .35rem;
+      color: var(--purple);
+      background: #fff;
+      font: inherit;
+      cursor: pointer;
+    }
+    .gallery-viewer button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
     .contact { border-bottom: 0; }
     .contact-links { margin: 0; padding: 0; list-style: none; overflow-wrap: anywhere; }
     .contact-form { max-width: 34rem; margin-top: 1.25rem; }
@@ -233,6 +258,14 @@
         </div>
       </section>
 
+      <section class="section" id="gallery" aria-labelledby="gallery-heading">
+        <h2 id="gallery-heading">Photo Gallery</h2>
+        <div class="gallery-photos">
+          <a href="diya-portrait.jpg"><img src="diya-portrait.jpg" alt="Diya Panchamia smiling, in a yellow and teal outfit" width="1200" height="1600" loading="lazy"></a>
+          <a href="diya-gallery.jpg"><img src="diya-gallery.jpg" alt="Diya Panchamia standing in a yellow and teal outfit" width="1200" height="1600" loading="lazy"></a>
+        </div>
+      </section>
+
       <section class="section" id="skills" aria-labelledby="skills-heading">
         <h2 id="skills-heading">Skills</h2>
         <ul class="skills">
@@ -326,6 +359,28 @@
       window.location.href = emailLink.href + "?body=" + body;
     });
     contactForm.hidden = false;
+  </script>
+  <dialog class="gallery-viewer" aria-label="Enlarged gallery photo">
+    <form method="dialog"><button type="submit" autofocus>Close</button></form>
+    <img alt="">
+  </dialog>
+  <script>
+    const galleryViewer = document.querySelector(".gallery-viewer");
+    const enlargedPhoto = galleryViewer.querySelector("img");
+
+    document.querySelectorAll(".gallery-photos a").forEach(photoLink => {
+      photoLink.addEventListener("click", event => {
+        if (typeof galleryViewer.showModal !== "function") return;
+        event.preventDefault();
+        enlargedPhoto.alt = photoLink.querySelector("img").alt;
+        enlargedPhoto.src = photoLink.href;
+        galleryViewer.showModal();
+      });
+    });
+
+    galleryViewer.addEventListener("click", event => {
+      if (event.target === galleryViewer) galleryViewer.close();
+    });
   </script>
 </body>
 </html>
