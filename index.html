@@ -13,14 +13,27 @@
       --muted: #51485a;
       --line: #e6ddeb;
       --wash: #f8f2fb;
+      --surface: #fff;
+      --on-purple: #fff;
       --width: 68rem;
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --purple: #d6a9ff;
+      --ink: #f5edf9;
+      --muted: #cfc1d8;
+      --line: #51415d;
+      --wash: #251b30;
+      --surface: #19131f;
+      --on-purple: #21112e;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
 
     body {
       margin: 0;
-      background: #fff;
+      background: var(--surface);
       color: var(--ink);
       font: 1rem/1.6 "Segoe UI", system-ui, sans-serif;
     }
@@ -43,6 +56,17 @@
     .masthead a { text-decoration: none; }
     .masthead a:hover { text-decoration: underline; }
     nav { font-size: .9rem; font-weight: 600; }
+    .theme-toggle {
+      padding: .25rem .65rem;
+      border: 1px solid var(--purple);
+      border-radius: .35rem;
+      background: var(--surface);
+      color: var(--purple);
+      font: inherit;
+      cursor: pointer;
+    }
+    .theme-toggle[aria-pressed="true"] { background: var(--purple); color: var(--on-purple); }
+    .theme-toggle:focus-visible { outline: 2px solid var(--purple); outline-offset: 3px; }
 
     .hero { background: var(--wash); border-bottom: 1px solid var(--line); }
     .hero .wrap {
@@ -108,14 +132,14 @@
       border: 1px solid var(--purple);
       border-radius: 999px;
       padding: .45rem .9rem;
-      background: #fff;
+      background: var(--surface);
       color: var(--purple);
       font: inherit;
       font-weight: 600;
       cursor: pointer;
     }
     .project-filters button:hover { background: var(--wash); }
-    .project-filters button[aria-pressed="true"] { background: var(--purple); color: #fff; }
+    .project-filters button[aria-pressed="true"] { background: var(--purple); color: var(--on-purple); }
     .project-filters button:focus-visible { outline: 2px solid var(--purple); outline-offset: 3px; }
     .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
     .card { padding: 1.15rem; border: 1px solid var(--line); border-top: 3px solid var(--purple); }
@@ -147,7 +171,7 @@
       border: 1px solid var(--purple);
       border-radius: .35rem;
       color: var(--purple);
-      background: #fff;
+      background: var(--surface);
       font: inherit;
       cursor: pointer;
     }
@@ -163,7 +187,7 @@
       padding: .65rem .8rem;
       border: 1px solid var(--muted);
       border-radius: .4rem;
-      background: #fff;
+      background: var(--surface);
       color: var(--ink);
       font: inherit;
       resize: vertical;
@@ -173,7 +197,7 @@
       border: 1px solid var(--purple);
       border-radius: .4rem;
       background: var(--purple);
-      color: #fff;
+      color: var(--on-purple);
       font: inherit;
       font-weight: 600;
       cursor: pointer;
@@ -195,6 +219,16 @@
       nav { gap: .3rem .85rem; }
     }
   </style>
+  <script>
+    const themeRoot = document.documentElement;
+    const themeKey = "diya-color-theme";
+
+    try {
+      if (localStorage.getItem(themeKey) === "dark") themeRoot.dataset.theme = "dark";
+    } catch {
+      // The toggle still works when browser storage is unavailable.
+    }
+  </script>
 </head>
 <body id="top">
   <header class="masthead">
@@ -205,6 +239,7 @@
         <a href="#projects">Projects</a>
         <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
+        <button class="theme-toggle" type="button" aria-pressed="false" hidden>Dark mode</button>
       </nav>
     </div>
   </header>
@@ -381,6 +416,21 @@
     galleryViewer.addEventListener("click", event => {
       if (event.target === galleryViewer) galleryViewer.close();
     });
+  </script>
+  <script>
+    const themeToggle = document.querySelector(".theme-toggle");
+    themeToggle.setAttribute("aria-pressed", String(themeRoot.dataset.theme === "dark"));
+    themeToggle.addEventListener("click", () => {
+      const darkMode = themeRoot.dataset.theme !== "dark";
+      themeRoot.dataset.theme = darkMode ? "dark" : "light";
+      themeToggle.setAttribute("aria-pressed", String(darkMode));
+      try {
+        localStorage.setItem(themeKey, themeRoot.dataset.theme);
+      } catch {
+        // Keep the selected theme active for this page.
+      }
+    });
+    themeToggle.hidden = false;
   </script>
 </body>
 </html>
