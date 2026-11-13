@@ -129,6 +129,32 @@
     .skills span { color: var(--muted); }
     .contact { border-bottom: 0; }
     .contact-links { margin: 0; padding: 0; list-style: none; overflow-wrap: anywhere; }
+    .contact-form { max-width: 34rem; margin-top: 1.25rem; }
+    .contact-form label { display: block; font-weight: 600; }
+    .contact-form textarea {
+      display: block;
+      width: 100%;
+      margin-block: .4rem .75rem;
+      padding: .65rem .8rem;
+      border: 1px solid var(--muted);
+      border-radius: .4rem;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      resize: vertical;
+    }
+    .contact-form button {
+      padding: .45rem 1rem;
+      border: 1px solid var(--purple);
+      border-radius: .4rem;
+      background: var(--purple);
+      color: #fff;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .contact-form :focus-visible { outline: 2px solid var(--purple); outline-offset: 3px; }
+    .contact-form p { margin: .5rem 0 0; color: var(--muted); font-size: .9rem; }
 
     @media (max-width: 54rem) {
       .section { grid-template-columns: 1fr; }
@@ -220,10 +246,18 @@
 
       <section class="section contact" id="contact" aria-labelledby="contact-heading">
         <h2 id="contact-heading">Contact</h2>
-        <ul class="contact-links">
-          <li><a href="mailto:dp4191@nyu.edu">dp4191@nyu.edu</a></li>
-          <li><a href="https://www.linkedin.com/in/diya-panchamia-488401222/">LinkedIn</a></li>
-        </ul>
+        <div>
+          <ul class="contact-links">
+            <li><a href="mailto:dp4191@nyu.edu">dp4191@nyu.edu</a></li>
+            <li><a href="https://www.linkedin.com/in/diya-panchamia-488401222/">LinkedIn</a></li>
+          </ul>
+          <form class="contact-form" hidden>
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" name="message" rows="5" required aria-describedby="contact-help"></textarea>
+            <button type="submit">Send</button>
+            <p id="contact-help">Opens a draft in your default email app.</p>
+          </form>
+        </div>
       </section>
     </div>
   </main>
@@ -273,6 +307,25 @@
       });
     });
     projectFilters.hidden = false;
+  </script>
+  <script>
+    const contactForm = document.querySelector(".contact-form");
+    const messageField = document.querySelector("#contact-message");
+    const emailLink = document.querySelector('.contact-links a[href^="mailto:"]');
+
+    messageField.addEventListener("input", () => messageField.setCustomValidity(""));
+    contactForm.addEventListener("submit", event => {
+      event.preventDefault();
+      if (!messageField.value.trim()) {
+        messageField.setCustomValidity("Please enter a message.");
+        messageField.reportValidity();
+        return;
+      }
+
+      const body = encodeURIComponent(messageField.value.replace(/\r?\n/g, "\r\n"));
+      window.location.href = emailLink.href + "?body=" + body;
+    });
+    contactForm.hidden = false;
   </script>
 </body>
 </html>
